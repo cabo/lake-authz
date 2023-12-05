@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-12-03T01:13:09.442435+00:00",
+  "timestamp": "2023-12-05T01:10:46.455206+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -49,6 +49,127 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
-  "pulls": []
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOKiCa6c54mu3L",
+      "title": "Voucher is not bound to U",
+      "url": "https://github.com/lake-wg/authz/issues/1",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This was previously discussed in the IETF-118, and the goal is to discuss whether it is desirable / necessary to have the voucher be bound to U.\r\n\r\nOne open question here is: how can V be sure that the Voucher received from W is bound to the sender of message_3?",
+      "createdAt": "2023-12-04T09:40:17Z",
+      "updatedAt": "2023-12-04T14:45:34Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "In a design team meeting last Friday (Dec 1) the following comments were raised:\r\n- the Voucher is protected by EDHOC session via the transcript hash\r\n- there is a consideration about doing authorization before authentication, that needs to be checked",
+          "createdAt": "2023-12-04T09:42:03Z",
+          "updatedAt": "2023-12-04T14:45:34Z"
+        },
+        {
+          "author": "sftcd",
+          "authorAssociation": "NONE",
+          "body": "\r\n\r\nOn 04/12/2023 09:42, Geovane Fedrecheski wrote:\r\n> In a meeting last Friday (Dec 1)\r\n\r\nWhat meeting was that? (Even though this is only a github comment,\r\nit's generally good to document that kind of thing so the IETF WG\r\ncan better evaluate outcomes from such a meeting.)\r\n\r\nTa,\r\nS.\r\n",
+          "createdAt": "2023-12-04T11:24:44Z",
+          "updatedAt": "2023-12-04T11:24:44Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@sftcd Good question. This was a design team meeting following up on the comments from IETF 118. Geovane is holding the pen driving the work forward :-)",
+          "createdAt": "2023-12-04T13:49:43Z",
+          "updatedAt": "2023-12-04T13:49:43Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "(@geonnave Maybe edit comments and make global replace \"meeting\" -> \"design team meeting\".)",
+          "createdAt": "2023-12-04T14:37:06Z",
+          "updatedAt": "2023-12-04T14:37:06Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOKiCa6c54mwA6",
+      "title": "Add EAD_3 field?",
+      "url": "https://github.com/lake-wg/authz/issues/2",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "After receiving message_3, V may want to check that CRED_U is bound to the voucher received from W (see #1). In this case, V would need to (1) have the voucher saved on state, and (2) it would have to dispatch a \"check CRED_U against Voucher\" action.\r\n\r\nRight now, on the implementation side, dispatching any EAD-related action is done via detecting the presence of an EAD field (since the core EDHOC implementation must be agnostic of EAD items).\r\n\r\nThus, it may make sense to add an EAD_3 field to enable such a dispatch.",
+      "createdAt": "2023-12-04T09:42:50Z",
+      "updatedAt": "2023-12-04T14:45:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "As discussed in the design team meeting, the next step is to think of additional scenarios where this might be needed (if any).",
+          "createdAt": "2023-12-04T09:43:30Z",
+          "updatedAt": "2023-12-04T14:45:59Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOKiCa6c54mweB",
+      "title": " Should the voucher include a scope?",
+      "url": "https://github.com/lake-wg/authz/issues/3",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "During the IETF-118 meeting, it was discussed whether the Voucher should include a scope. One simple alternative would be to propose an opaque \"scope\" field whose usage details would be left to the application.",
+      "createdAt": "2023-12-04T09:43:53Z",
+      "updatedAt": "2023-12-04T14:46:22Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "As discussed in the last design team meeting, we do plan to include a scope field. That may involve updating the Voucher structure to be a COSE_Encrypt0, where ciphertext is the concatenation of encrypted-plaintext (empty) and the voucher MAC. The scope can then be included in the encrypted-plaintext or in the (un)protected header. \r\n\r\nThe scope would convey information to U about V, such as capabilities of V, usage policies, etc. I think we need to think of a few concrete examples here.",
+          "createdAt": "2023-12-04T09:51:42Z",
+          "updatedAt": "2023-12-04T14:46:22Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 4,
+      "id": "PR_kwDOKiCa6c5hCE4Q",
+      "title": "Implementation notes",
+      "url": "https://github.com/lake-wg/authz/pull/4",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "There are 3 clarifications in separate commits. I am not totally sure if the consideration about credentials by value should be in the introduction, but I wanted them to be upfront in the document since it is a requirement to EDHOC implementations who wish to support this.",
+      "createdAt": "2023-12-04T09:58:22Z",
+      "updatedAt": "2023-12-04T09:58:23Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "implementation-notes",
+      "headRefOid": "15d06c5e8073245c576e7beeb8eb1a4766fd4651",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
