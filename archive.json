@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-11T01:10:55.749782+00:00",
+  "timestamp": "2024-01-14T01:15:53.567515+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -157,13 +157,13 @@
       "labels": [],
       "body": "There are 3 clarifications in separate commits. I am not totally sure if the consideration about credentials by value should be in the introduction, but I wanted them to be upfront in the document since it is a requirement to EDHOC implementations who wish to support this.",
       "createdAt": "2023-12-04T09:58:22Z",
-      "updatedAt": "2023-12-04T09:58:23Z",
+      "updatedAt": "2024-01-12T12:17:54Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "implementation-notes",
-      "headRefOid": "15d06c5e8073245c576e7beeb8eb1a4766fd4651",
+      "headRefOid": "0f7f19ddf70d6d6f27f40f6cf70a70d76e03ea14",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
