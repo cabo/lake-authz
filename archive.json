@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-18T01:10:40.161404+00:00",
+  "timestamp": "2024-01-21T01:16:19.559644+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -142,6 +142,54 @@
           "updatedAt": "2023-12-04T14:46:22Z"
         }
       ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOKiCa6c58nPKX",
+      "title": "Add error handling",
+      "url": "https://github.com/lake-wg/authz/issues/5",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The protocol should include an error handling mechanism. Below is a first sketch as well as a few considerations to be discussed:\r\n\r\n```\r\nW may answer Voucher Request with a Voucher Error (VERR):\r\n\r\nVERR = (code: uint, ?info: bstr)\r\n```\r\n\r\nNotes:\r\n- security: VERR should be encrypted and integrity-protected, e.g. `COSE_Encrypt0` from W to U, just like `ENC_ID` on `EAD_1`\r\n- how to transport: \r\n  - W to V: the encrypted VERR is sent via the secure channel already established between both parties\r\n  - V to U: we can possibly reuse EDHOC's error signalling (see [lake-edhoc#section-6](https://www.ietf.org/archive/id/draft-ietf-lake-edhoc-22.html#section-6)). Thus the encrypted VERR could be the content of `ERR_INFO`. Note that this might require declaring a new EDHOC `ERR_CODE`, so that `ERR_INFO` can have a content of type `bstr`.\r\n\r\ncc @gselander @malishav ",
+      "createdAt": "2024-01-19T14:15:31Z",
+      "updatedAt": "2024-01-19T14:15:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOKiCa6c58nZaT",
+      "title": "Appendix or Examples section",
+      "url": "https://github.com/lake-wg/authz/issues/6",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "A section with example use cases for the protocol can improve readability of the spec.\r\n\r\nHere is a brief list of use cases that can serve as base for such section:\r\n\r\n```\r\n### UC1: voucher works, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: [u1]\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W accepts and replies Voucher Response\r\n\r\n### UC2: basic error response, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n\r\n### UC3: basic error response, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n2. device u1 tries to join via gateway v2, W denies and replies Voucher Error\r\n3. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n\r\n### UC4: error includes gateway hint, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error with hint = [v3, v4]\r\n2. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n```",
+      "createdAt": "2024-01-19T14:40:26Z",
+      "updatedAt": "2024-01-19T14:40:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOKiCa6c58naZT",
+      "title": "Device enrollment in the presence of many Vs",
+      "url": "https://github.com/lake-wg/authz/issues/7",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The access policies in W may contain a mapping of which Us are authorized to join via which Vs, e.g. `{v1: [u1, u2], v2: [u3]}`. In this case, if a device detects many Vs in its vicinity, it may have to try to exhaustively try to enroll via different Vs until it finds the right one (see use case UC3 in issue #6).\r\n\r\nA possible solution includes sharing more information between V and W, so that this process can be sped up. Here is an initial sketch of how it could look like:\r\n\r\n```\r\n# Enrollment hints\r\nThis section defines optional fields with the purpose of improving protocol scalability, aiming to reduce battery usage and enrollment delay.\r\nThe main use case is when several potential gateways (V) are detected by U's radio, which can lead to U trying to enroll (and failing) several times until it finds a suitable V.\r\n\r\n## Domain Authenticator hints\r\nIn case W denies the enrollment of U to a given V, a list of Domain Authenticator hints (v_hints) can be sent from W to U.\r\nThe hint is optional and is sent as part of an error message.\r\nIt consists of a list of application-defined identifiers of V (e.g. MAC addresses, SSIDs, PAN IDs, etc.), as defined below:\r\n\r\nv_hints = [ 1* bstr ]\r\n\r\n## Device hints\r\nU may send a Device hint (u_hint) so that it can help W to select which Vs to include in v_hints.\r\nThis can be useful in large scale scenarios with many gateways (V).\r\nThe hint is an optional field in EAD_1, and it must be encrypted.\r\nThe hint itself is application dependent, and can contain GPS coordinates, application-specific tags, the list of Vs detected by U, or other relevant information.\r\nIt is defined as follows:\r\n\r\nu_hint: [ 1* bstr ]\r\n```\r\n\r\nNotes:\r\n- related to #5, as `v_hint` would be carried in the Voucher Error message\r\n- all hints should be encrypted and integrity-protected, e.g., via `COSE_Encrypt0`",
+      "createdAt": "2024-01-19T14:42:53Z",
+      "updatedAt": "2024-01-19T14:42:53Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
