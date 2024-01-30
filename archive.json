@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-28T01:10:19.175908+00:00",
+  "timestamp": "2024-01-30T01:05:32.138473+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -213,13 +213,13 @@
       "labels": [],
       "body": "There are 3 clarifications in separate commits. I am not totally sure if the consideration about credentials by value should be in the introduction, but I wanted them to be upfront in the document since it is a requirement to EDHOC implementations who wish to support this.",
       "createdAt": "2023-12-04T09:58:22Z",
-      "updatedAt": "2024-01-26T11:10:44Z",
+      "updatedAt": "2024-01-29T08:02:17Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "implementation-notes",
-      "headRefOid": "4b965bc494e57320211e6437669339f3475cb2b3",
+      "headRefOid": "961df517ca51e98fd9efaa10abe05c58f0c613e9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -231,6 +231,13 @@
           "body": "Looks good, I made some editorial changes.\r\n\r\n(For some reason editor's copy won't update, don't understand why.) ",
           "createdAt": "2024-01-26T11:10:43Z",
           "updatedAt": "2024-01-26T11:10:43Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "@gselander thank you. The problem was a missing reference declaration, and is now fixed.",
+          "createdAt": "2024-01-29T08:02:17Z",
+          "updatedAt": "2024-01-29T08:02:17Z"
         }
       ],
       "reviews": []
@@ -299,6 +306,40 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOKiCa6c5lWPlr",
+      "title": "Add Examples section (appendix)",
+      "url": "https://github.com/lake-wg/authz/pull/10",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses #6.",
+      "createdAt": "2024-01-29T16:36:41Z",
+      "updatedAt": "2024-01-29T16:39:55Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "add-examples-section",
+      "headRefOid": "d00fcb9e160964257042aebd9b0c455983f7561b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "Note that the second example (equivalent to UC4 in #6) does not include the `hint`, as it is not specified yet. It can be added back once that is done.",
+          "createdAt": "2024-01-29T16:39:54Z",
+          "updatedAt": "2024-01-29T16:39:54Z"
+        }
+      ],
       "reviews": []
     }
   ]
