@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-30T01:05:32.138473+00:00",
+  "timestamp": "2024-02-01T01:09:21.084142+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -338,6 +338,40 @@
           "body": "Note that the second example (equivalent to UC4 in #6) does not include the `hint`, as it is not specified yet. It can be added back once that is done.",
           "createdAt": "2024-01-29T16:39:54Z",
           "updatedAt": "2024-01-29T16:39:54Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOKiCa6c5lkfiV",
+      "title": "Add scope field to voucher",
+      "url": "https://github.com/lake-wg/authz/pull/11",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Addressing #3.\r\n\r\nThe idea is to use 'ciphertext' from COSE_Encrypt0, which already has a MAC (the authentication tag), with the added benefit that now it is possible for W to send encrypted opaque data to U.",
+      "createdAt": "2024-01-31T13:21:39Z",
+      "updatedAt": "2024-01-31T13:50:38Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "add-scope-to-voucher",
+      "headRefOid": "97f5ee24b9709d6992506d66767393d36cf3af92",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "NONE",
+          "body": "Some notes:\r\n- I am not sure `SCOPE` is the best name here. Maybe `OPAQUE_DATA` or similar (open to ideas).\r\n- I don't know if there is a rule for naming things like `K_2` and `info_label`, so I just incremented them from the values already in the draft.",
+          "createdAt": "2024-01-31T13:47:36Z",
+          "updatedAt": "2024-01-31T13:47:36Z"
         }
       ],
       "reviews": []
