@@ -5,12 +5,12 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 29 July 2024                                         M. Vučinić
+Expires: 5 August 2024                                        M. Vučinić
                                                           G. Fedrecheski
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
-                                                         26 January 2024
+                                                         2 February 2024
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 July 2024.
+   This Internet-Draft will expire on 5 August 2024.
 
 Copyright Notice
 
@@ -222,8 +222,15 @@ Table of Contents
    *  U and V need not have any previous relation, this protocol
       establishes a relation between U and V.
 
-   Each of the three parties have protected communication with the other
-   two during the protocol.
+   Each of the three parties can gain protected communication with the
+   other two during the protocol.
+
+   V may be able to access credentials over non-nonstrained networks,
+   but U may be limited to constrained networks.  Implementations
+   wishing to leverage the zero-touch capabilities of this protocol are
+   expected to support transmission of credentials from V to U by value
+   during the EDHOC exchange, which will impact the message size
+   depending on type of credential used.
 
            Explicit relation (e.g., from device manufacture)
        | <---------------------------------------------------> |
@@ -232,7 +239,7 @@ Table of Contents
   |          |            |               |            |               |
   |  Device  |    con-    |    Domain     |  not con-  |   Enrollment  |
   |          |  strained  | Authenticator |  strained  |     Server    |
-  |   (U)    |  network   |       (V)     |  network   |      (W)      |
+  |   (U)    |  network   |      (V)      |  network   |      (W)      |
   |          |            |               |            |               |
   +----+-----+            +-------+-------+            +-------+-------+
        |                          |                            |
@@ -556,25 +563,30 @@ Table of Contents
    *  SS is the selected cipher suite in SUITES_I of EDHOC message_1,
       see Section 4.5.
 
+   The external_aad is wrapped in an enc_structure as defined in
+   Section 5.3 of [RFC8152].
+
    Editor's note: Add more context to external_aad.
 
    The derivation of K_1 = EDHOC-Expand(PRK, info, length) uses the
-   following input to the info struct (see Section 4.2):
+   following input to the info struct (see OKM in Section 4.2):
 
    *  info_label = 0
 
    *  context = h'' (the empty CBOR string)
 
    *  length is length of key of the EDHOC AEAD algorithm in bytes
+      (which is the length of K_1)
 
    The derivation of IV_1 = EDHOC-Expand(PRK, info, length) uses the
-   following input to the info struct (see Section 4.2):
+   following input to the info struct (see OKM in Section 4.2):
 
    *  info_label = 1
 
    *  context = h'' (the empty CBOR string)
 
    *  length is length of nonce of the EDHOC AEAD algorithm in bytes
+      (which is the length of IV_1)
 
 4.4.2.  Voucher
 
@@ -1039,6 +1051,10 @@ Table of Contents
               <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/
               NIST.SP.800-56Ar3.pdf>.
 
+   [RFC8152]  Schaad, J., "CBOR Object Signing and Encryption (COSE)",
+              RFC 8152, DOI 10.17487/RFC8152, July 2017,
+              <https://www.rfc-editor.org/info/rfc8152>.
+
    [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
               "A Voucher Artifact for Bootstrapping Protocols",
               RFC 8366, DOI 10.17487/RFC8366, May 2018,
@@ -1081,6 +1097,13 @@ Table of Contents
               Work in Progress, Internet-Draft, draft-ietf-lake-reqs-04,
               8 June 2020, <https://datatracker.ietf.org/doc/html/draft-
               ietf-lake-reqs-04>.
+
+   [I-D.ietf-lake-traces]
+              Selander, G., Mattsson, J. P., Serafin, M., Tiloca, M.,
+              and M. Vučinić, "Traces of EDHOC", Work in Progress,
+              Internet-Draft, draft-ietf-lake-traces-09, 27 January
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              lake-traces-09>.
 
    [IEEE802.15.4]
               IEEE standard for Information Technology, "IEEE Std
