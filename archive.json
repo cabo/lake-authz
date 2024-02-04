@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-01T01:09:21.084142+00:00",
+  "timestamp": "2024-02-04T01:10:12.277515+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -57,7 +57,7 @@
       "url": "https://github.com/lake-wg/authz/issues/1",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This was previously discussed in the IETF-118, and the goal is to discuss whether it is desirable / necessary to have the voucher be bound to U.\r\n\r\nOne open question here is: how can V be sure that the Voucher received from W is bound to the sender of message_3?",
@@ -67,7 +67,7 @@
       "comments": [
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "In a design team meeting last Friday (Dec 1) the following comments were raised:\r\n- the Voucher is protected by EDHOC session via the transcript hash\r\n- there is a consideration about doing authorization before authentication, that needs to be checked",
           "createdAt": "2023-12-04T09:42:03Z",
           "updatedAt": "2023-12-04T14:45:34Z"
@@ -102,7 +102,7 @@
       "url": "https://github.com/lake-wg/authz/issues/2",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "After receiving message_3, V may want to check that CRED_U is bound to the voucher received from W (see #1). In this case, V would need to (1) have the voucher saved on state, and (2) it would have to dispatch a \"check CRED_U against Voucher\" action.\r\n\r\nRight now, on the implementation side, dispatching any EAD-related action is done via detecting the presence of an EAD field (since the core EDHOC implementation must be agnostic of EAD items).\r\n\r\nThus, it may make sense to add an EAD_3 field to enable such a dispatch.",
@@ -112,7 +112,7 @@
       "comments": [
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "As discussed in the design team meeting, the next step is to think of additional scenarios where this might be needed (if any).",
           "createdAt": "2023-12-04T09:43:30Z",
           "updatedAt": "2023-12-04T14:45:59Z"
@@ -126,7 +126,7 @@
       "url": "https://github.com/lake-wg/authz/issues/3",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "During the IETF-118 meeting, it was discussed whether the Voucher should include a scope. One simple alternative would be to propose an opaque \"scope\" field whose usage details would be left to the application.",
@@ -136,7 +136,7 @@
       "comments": [
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "As discussed in the last design team meeting, we do plan to include a scope field. That may involve updating the Voucher structure to be a COSE_Encrypt0, where ciphertext is the concatenation of encrypted-plaintext (empty) and the voucher MAC. The scope can then be included in the encrypted-plaintext or in the (un)protected header. \r\n\r\nThe scope would convey information to U about V, such as capabilities of V, usage policies, etc. I think we need to think of a few concrete examples here.",
           "createdAt": "2023-12-04T09:51:42Z",
           "updatedAt": "2023-12-04T14:46:22Z"
@@ -150,7 +150,7 @@
       "url": "https://github.com/lake-wg/authz/issues/5",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The protocol should include an error handling mechanism. Below is a first sketch as well as a few considerations to be discussed:\r\n\r\n```\r\nW may answer Voucher Request with a Voucher Error (VERR):\r\n\r\nVERR = (code: uint, ?info: bstr)\r\n```\r\n\r\nNotes:\r\n- security: VERR should be encrypted and integrity-protected, e.g. `COSE_Encrypt0` from W to U, just like `ENC_ID` on `EAD_1`\r\n- how to transport: \r\n  - W to V: the encrypted VERR is sent via the secure channel already established between both parties\r\n  - V to U: we can possibly reuse EDHOC's error signalling (see [lake-edhoc#section-6](https://www.ietf.org/archive/id/draft-ietf-lake-edhoc-22.html#section-6)). Thus the encrypted VERR could be the content of `ERR_INFO`. Note that this might require declaring a new EDHOC `ERR_CODE`, so that `ERR_INFO` can have a content of type `bstr`.\r\n\r\ncc @gselander @malishav ",
@@ -166,7 +166,7 @@
       "url": "https://github.com/lake-wg/authz/issues/6",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "A section with example use cases for the protocol can improve readability of the spec.\r\n\r\nHere is a brief list of use cases that can serve as base for such section:\r\n\r\n```\r\n### UC1: voucher works, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: [u1]\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W accepts and replies Voucher Response\r\n\r\n### UC2: basic error response, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n\r\n### UC3: basic error response, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n2. device u1 tries to join via gateway v2, W denies and replies Voucher Error\r\n3. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n\r\n### UC4: error includes gateway hint, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error with hint = [v3, v4]\r\n2. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n```",
@@ -190,7 +190,7 @@
       "url": "https://github.com/lake-wg/authz/issues/7",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The access policies in W may contain a mapping of which Us are authorized to join via which Vs, e.g. `{v1: [u1, u2], v2: [u3]}`. In this case, if a device detects many Vs in its vicinity, it may have to try to exhaustively try to enroll via different Vs until it finds the right one (see use case UC3 in issue #6).\r\n\r\nA possible solution includes sharing more information between V and W, so that this process can be sped up. Here is an initial sketch of how it could look like:\r\n\r\n```\r\n# Enrollment hints\r\nThis section defines optional fields with the purpose of improving protocol scalability, aiming to reduce battery usage and enrollment delay.\r\nThe main use case is when several potential gateways (V) are detected by U's radio, which can lead to U trying to enroll (and failing) several times until it finds a suitable V.\r\n\r\n## Domain Authenticator hints\r\nIn case W denies the enrollment of U to a given V, a list of Domain Authenticator hints (v_hints) can be sent from W to U.\r\nThe hint is optional and is sent as part of an error message.\r\nIt consists of a list of application-defined identifiers of V (e.g. MAC addresses, SSIDs, PAN IDs, etc.), as defined below:\r\n\r\nv_hints = [ 1* bstr ]\r\n\r\n## Device hints\r\nU may send a Device hint (u_hint) so that it can help W to select which Vs to include in v_hints.\r\nThis can be useful in large scale scenarios with many gateways (V).\r\nThe hint is an optional field in EAD_1, and it must be encrypted.\r\nThe hint itself is application dependent, and can contain GPS coordinates, application-specific tags, the list of Vs detected by U, or other relevant information.\r\nIt is defined as follows:\r\n\r\nu_hint: [ 1* bstr ]\r\n```\r\n\r\nNotes:\r\n- related to #5, as `v_hint` would be carried in the Voucher Error message\r\n- all hints should be encrypted and integrity-protected, e.g., via `COSE_Encrypt0`",
@@ -206,24 +206,26 @@
       "id": "PR_kwDOKiCa6c5hCE4Q",
       "title": "Implementation notes",
       "url": "https://github.com/lake-wg/authz/pull/4",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "There are 3 clarifications in separate commits. I am not totally sure if the consideration about credentials by value should be in the introduction, but I wanted them to be upfront in the document since it is a requirement to EDHOC implementations who wish to support this.",
       "createdAt": "2023-12-04T09:58:22Z",
-      "updatedAt": "2024-01-29T08:02:17Z",
+      "updatedAt": "2024-02-02T08:24:25Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "implementation-notes",
       "headRefOid": "961df517ca51e98fd9efaa10abe05c58f0c613e9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-02-02T08:24:22Z",
+      "mergedAt": "2024-02-02T08:24:22Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "7406be0905efda10dd7996d7b7cc6e287f27bcdd"
+      },
       "comments": [
         {
           "author": "gselander",
@@ -234,7 +236,7 @@
         },
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@gselander thank you. The problem was a missing reference declaration, and is now fixed.",
           "createdAt": "2024-01-29T08:02:17Z",
           "updatedAt": "2024-01-29T08:02:17Z"
@@ -247,24 +249,26 @@
       "id": "PR_kwDOKiCa6c5lEemS",
       "title": "Update links to new repository at lake-wg",
       "url": "https://github.com/lake-wg/authz/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-01-25T14:07:33Z",
-      "updatedAt": "2024-01-25T14:12:06Z",
+      "updatedAt": "2024-02-02T08:24:47Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "update-links-to-new-repo",
       "headRefOid": "2e774da3036612abee259e6e725b618fe4f12b39",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-02-02T08:24:44Z",
+      "mergedAt": "2024-02-02T08:24:44Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "f2e543dcfd316af94893f13ffc2507822f43db17"
+      },
       "comments": [],
       "reviews": [
         {
@@ -289,18 +293,18 @@
       "url": "https://github.com/lake-wg/authz/pull/9",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Adding an error handling section. Work in progress.",
       "createdAt": "2024-01-26T08:45:49Z",
-      "updatedAt": "2024-01-26T08:45:49Z",
+      "updatedAt": "2024-02-02T07:34:42Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-error-section",
-      "headRefOid": "7f416daf06f631e353fe65155eac9c1d9ffdd923",
+      "headRefOid": "3e7a28714833c3c44402e007d830b93d6b589528",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -315,7 +319,7 @@
       "url": "https://github.com/lake-wg/authz/pull/10",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addresses #6.",
@@ -334,7 +338,7 @@
       "comments": [
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Note that the second example (equivalent to UC4 in #6) does not include the `hint`, as it is not specified yet. It can be added back once that is done.",
           "createdAt": "2024-01-29T16:39:54Z",
           "updatedAt": "2024-01-29T16:39:54Z"
@@ -349,12 +353,12 @@
       "url": "https://github.com/lake-wg/authz/pull/11",
       "state": "OPEN",
       "author": "geonnave",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addressing #3.\r\n\r\nThe idea is to use 'ciphertext' from COSE_Encrypt0, which already has a MAC (the authentication tag), with the added benefit that now it is possible for W to send encrypted opaque data to U.",
       "createdAt": "2024-01-31T13:21:39Z",
-      "updatedAt": "2024-01-31T13:50:38Z",
+      "updatedAt": "2024-02-02T08:56:48Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
@@ -368,12 +372,79 @@
       "comments": [
         {
           "author": "geonnave",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Some notes:\r\n- I am not sure `SCOPE` is the best name here. Maybe `OPAQUE_DATA` or similar (open to ideas).\r\n- I don't know if there is a rule for naming things like `K_2` and `info_label`, so I just incremented them from the values already in the draft.",
           "createdAt": "2024-01-31T13:47:36Z",
           "updatedAt": "2024-01-31T13:47:36Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Discussed in the design team meeting:\r\n\r\n```\r\n# from U to W:\r\nnow: plaintext = ID_U\r\ndesired: plaintext =\r\n\r\nENC_U_INFO = (\r\n  ID_U: bstr\r\n  ?opaque_info: bstr\r\n    e.g. available_networks, e.g. mac address (previously u_hints)\r\n)\r\n\r\n# from W to U:\r\nENC_W_INFO = (\r\n  ?opaque_info: bstr\r\n    e.g. selected/proposed_networks, e.g. mac address (previously v_hints)\r\n)\r\n```",
+          "createdAt": "2024-02-02T08:56:47Z",
+          "updatedAt": "2024-02-02T08:56:47Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOKiCa6c5ls3YD",
+      "title": "Update draft name and URLs",
+      "url": "https://github.com/lake-wg/authz/pull/12",
+      "state": "CLOSED",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Similar to #8. This also updates the filename to match the working group draft name.\r\n\r\nNot sure how to update the diff URL though.",
+      "createdAt": "2024-02-01T13:26:27Z",
+      "updatedAt": "2024-02-02T10:13:46Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "update-more-urls",
+      "headRefOid": "3c0a45061c5d69276a7487072c9ed2de40415522",
+      "closedAt": "2024-02-02T10:13:46Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closing as it was solved in commits https://github.com/lake-wg/authz/commit/085fd96bce160938420a6aaadef62876539d0d8f and https://github.com/lake-wg/authz/commit/72a75a10e582c553ff1600d902d66a7346095f6b",
+          "createdAt": "2024-02-02T10:13:42Z",
+          "updatedAt": "2024-02-02T10:13:42Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOKiCa6c5ls_Io",
+      "title": "Add enrollment hints",
+      "url": "https://github.com/lake-wg/authz/pull/13",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses #7. Work in progress.",
+      "createdAt": "2024-02-01T13:42:22Z",
+      "updatedAt": "2024-02-01T13:42:22Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "add-enrollment-hints",
+      "headRefOid": "cd0179e1ecadee33873704aa5ed8f009b8597ba4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
