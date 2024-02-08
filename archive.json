@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-06T01:05:26.696451+00:00",
+  "timestamp": "2024-02-08T01:04:30.552615+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -298,13 +298,13 @@
       "labels": [],
       "body": "Adding an error handling section. Work in progress.",
       "createdAt": "2024-01-26T08:45:49Z",
-      "updatedAt": "2024-02-02T07:34:42Z",
+      "updatedAt": "2024-02-06T10:00:37Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "048c37dcfb72a09c7c4e691611897123384e2838",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-error-section",
-      "headRefOid": "3e7a28714833c3c44402e007d830b93d6b589528",
+      "headRefOid": "1b6922a5571950ae7da3d661ec85f2926aa46c4a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -349,7 +349,7 @@
     {
       "number": 11,
       "id": "PR_kwDOKiCa6c5lkfiV",
-      "title": "Add scope field to voucher",
+      "title": "Ability to transfer opaque application data",
       "url": "https://github.com/lake-wg/authz/pull/11",
       "state": "OPEN",
       "author": "geonnave",
@@ -358,13 +358,13 @@
       "labels": [],
       "body": "Addressing #3.\r\n\r\nThe idea is to use 'ciphertext' from COSE_Encrypt0, which already has a MAC (the authentication tag), with the added benefit that now it is possible for W to send encrypted opaque data to U.",
       "createdAt": "2024-01-31T13:21:39Z",
-      "updatedAt": "2024-02-02T08:56:48Z",
+      "updatedAt": "2024-02-06T12:41:42Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
-      "baseRefOid": "ac30874fe99d1ca2c8f657e198844d467a08c57b",
+      "baseRefOid": "72a75a10e582c553ff1600d902d66a7346095f6b",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-scope-to-voucher",
-      "headRefOid": "97f5ee24b9709d6992506d66767393d36cf3af92",
+      "headRefOid": "6ad8dd47d37b5ae125284a165d7aa945754296b9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -383,6 +383,13 @@
           "body": "Discussed in the design team meeting:\r\n\r\n```\r\n# from U to W:\r\nnow: plaintext = ID_U\r\ndesired: plaintext =\r\n\r\nENC_U_INFO = (\r\n  ID_U: bstr\r\n  ?opaque_info: bstr\r\n    e.g. available_networks, e.g. mac address (previously u_hints)\r\n)\r\n\r\n# from W to U:\r\nENC_W_INFO = (\r\n  ?opaque_info: bstr\r\n    e.g. selected/proposed_networks, e.g. mac address (previously v_hints)\r\n)\r\n```",
           "createdAt": "2024-02-02T08:56:47Z",
           "updatedAt": "2024-02-02T08:56:47Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Just to update on the above, what we really want is to enable transmission of an optional OPAQUE_INFO in the three cases below:\r\n\r\n```\r\n1. from U to W, within EAD_1 / Voucher_Info\r\nENC_U_INFO = (\r\n  ID_U: bstr\r\n  ?OPAQUE_INFO: bstr\r\n    e.g. available_networks, e.g. mac address (previously u_hints)\r\n)\r\n\r\n2. from W to U, within EAD_2 / Voucher\r\nplaintext of Voucher = (\r\n  ?OPAQUE_INFO: bstr\r\n    e.g. selected/proposed_networks, e.g. mac address (previously v_hints)\r\n)\r\n\r\n(note that in this case the MAC, which was originally the full content of the Voucher, will be the authentication tag generated during encryption)\r\n\r\n3. from W to U, within Error message\r\nplaintext of REJECT_INFO = (\r\n    ?OPAQUE_INFO:            bstr,\r\n)\r\n```\r\n\r\nIn this PR, cases 1 and 2 are addressed (I am updating its title).\r\nCase 3 is being handled in PR #9, and will be updated once this one is settled, as it is now establishing some new terminology.",
+          "createdAt": "2024-02-06T11:13:40Z",
+          "updatedAt": "2024-02-06T12:41:42Z"
         }
       ],
       "reviews": []
