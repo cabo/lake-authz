@@ -5,12 +5,12 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 5 August 2024                                        M. Vučinić
+Expires: 11 August 2024                                       M. Vučinić
                                                           G. Fedrecheski
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
-                                                         2 February 2024
+                                                         8 February 2024
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 August 2024.
+   This Internet-Draft will expire on 11 August 2024.
 
 Copyright Notice
 
@@ -564,7 +564,7 @@ Table of Contents
       see Section 4.5.
 
    The external_aad is wrapped in an enc_structure as defined in
-   Section 5.3 of [RFC8152].
+   Section 5.3 of [RFC9052].
 
    Editor's note: Add more context to external_aad.
 
@@ -1051,10 +1051,6 @@ Table of Contents
               <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/
               NIST.SP.800-56Ar3.pdf>.
 
-   [RFC8152]  Schaad, J., "CBOR Object Signing and Encryption (COSE)",
-              RFC 8152, DOI 10.17487/RFC8152, July 2017,
-              <https://www.rfc-editor.org/info/rfc8152>.
-
    [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
               "A Voucher Artifact for Bootstrapping Protocols",
               RFC 8366, DOI 10.17487/RFC8366, May 2018,
@@ -1097,13 +1093,6 @@ Table of Contents
               Work in Progress, Internet-Draft, draft-ietf-lake-reqs-04,
               8 June 2020, <https://datatracker.ietf.org/doc/html/draft-
               ietf-lake-reqs-04>.
-
-   [I-D.ietf-lake-traces]
-              Selander, G., Mattsson, J. P., Serafin, M., Tiloca, M.,
-              and M. Vučinić, "Traces of EDHOC", Work in Progress,
-              Internet-Draft, draft-ietf-lake-traces-09, 27 January
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              lake-traces-09>.
 
    [IEEE802.15.4]
               IEEE standard for Information Technology, "IEEE Std
