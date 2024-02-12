@@ -5,16 +5,16 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 11 August 2024                                       M. Vučinić
+Expires: 15 August 2024                                       M. Vučinić
                                                           G. Fedrecheski
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
-                                                         8 February 2024
+                                                        12 February 2024
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
-                    draft-selander-lake-authz-latest
+                      draft-ietf-lake-authz-latest
 
 Abstract
 
@@ -29,9 +29,9 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://ericssonresearch.github.io/ace-ake-authz/draft-selander-lake-
+   https://ericssonresearch.github.io/ace-ake-authz/draft-ietf-lake-
    authz.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-selander-lake-authz/.
+   https://datatracker.ietf.org/doc/draft-ietf-lake-authz/.
 
    Discussion of this document takes place on the Lightweight
    Authenticated Key Exchange Working Group mailing list
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 August 2024.
+   This Internet-Draft will expire on 15 August 2024.
 
 Copyright Notice
 
@@ -1171,7 +1171,7 @@ Appendix A.  Use with Constrained Join Protocol (CoJP)
    |            CoJP response           |                              |
    |
 
-           Figure 4: Use of draft-selander-lake-authz with CoJP.
+             Figure 4: Use of draft-ietf-lake-authz with CoJP.
 
 A.1.  Network Discovery
 
