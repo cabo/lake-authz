@@ -13,11 +13,11 @@
 <meta content="
        This document describes a procedure for authorizing enrollment of new devices using the lightweight authenticated key exchange protocol Ephemeral Diffie-Hellman Over COSE (EDHOC). The procedure is applicable to zero-touch onboarding of new devices to a constrained network leveraging trust anchors installed at manufacture time. 
     " name="description">
-<meta content="xml2rfc 3.19.2" name="generator">
+<meta content="xml2rfc 3.19.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-lake-authz-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.2
+  xml2rfc 3.19.4
     Python 3.11.6
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -1033,7 +1033,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Selander, et al.</td>
-<td class="center">Expires 15 August 2024</td>
+<td class="center">Expires 29 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1046,12 +1046,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-lake-authz-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-12" class="published">12 February 2024</time>
+<time datetime="2024-02-26" class="published">26 February 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-15">15 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-29">29 August 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1540,117 +1540,117 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 <figure id="figure-3">
           <div id="section-4.1-4.1">
             <div class="alignCenter art-svg artwork" id="section-4.1-4.1.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="864" width="560" viewBox="0 0 560 864" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="864" width="584" viewBox="0 0 584 864" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
                 <path d="M 8,48 L 8,224" fill="none" stroke="black"></path>
                 <path d="M 8,304 L 8,624" fill="none" stroke="black"></path>
                 <path d="M 8,688 L 8,848" fill="none" stroke="black"></path>
-                <path d="M 232,48 L 232,224" fill="none" stroke="black"></path>
-                <path d="M 232,304 L 232,624" fill="none" stroke="black"></path>
-                <path d="M 232,688 L 232,848" fill="none" stroke="black"></path>
-                <path d="M 552,48 L 552,224" fill="none" stroke="black"></path>
-                <path d="M 552,304 L 552,624" fill="none" stroke="black"></path>
-                <path d="M 552,736 L 552,848" fill="none" stroke="black"></path>
-                <path d="M 240,96 L 264,96" fill="none" stroke="black"></path>
-                <path d="M 288,96 L 304,96" fill="none" stroke="black"></path>
-                <path d="M 328,96 L 344,96" fill="none" stroke="black"></path>
-                <path d="M 368,96 L 384,96" fill="none" stroke="black"></path>
-                <path d="M 408,96 L 424,96" fill="none" stroke="black"></path>
-                <path d="M 448,96 L 464,96" fill="none" stroke="black"></path>
-                <path d="M 488,96 L 504,96" fill="none" stroke="black"></path>
-                <path d="M 528,96 L 544,96" fill="none" stroke="black"></path>
-                <path d="M 240,160 L 264,160" fill="none" stroke="black"></path>
-                <path d="M 288,160 L 304,160" fill="none" stroke="black"></path>
-                <path d="M 328,160 L 344,160" fill="none" stroke="black"></path>
-                <path d="M 368,160 L 384,160" fill="none" stroke="black"></path>
-                <path d="M 408,160 L 424,160" fill="none" stroke="black"></path>
-                <path d="M 448,160 L 464,160" fill="none" stroke="black"></path>
-                <path d="M 488,160 L 504,160" fill="none" stroke="black"></path>
-                <path d="M 528,160 L 544,160" fill="none" stroke="black"></path>
-                <path d="M 8,256 L 552,256" fill="none" stroke="black"></path>
-                <path d="M 8,336 L 224,336" fill="none" stroke="black"></path>
-                <path d="M 232,400 L 544,400" fill="none" stroke="black"></path>
-                <path d="M 240,464 L 552,464" fill="none" stroke="black"></path>
-                <path d="M 16,528 L 232,528" fill="none" stroke="black"></path>
-                <path d="M 8,608 L 224,608" fill="none" stroke="black"></path>
-                <path d="M 8,656 L 552,656" fill="none" stroke="black"></path>
-                <path d="M 232,768 L 256,768" fill="none" stroke="black"></path>
-                <path d="M 280,768 L 296,768" fill="none" stroke="black"></path>
-                <path d="M 320,768 L 336,768" fill="none" stroke="black"></path>
-                <path d="M 360,768 L 376,768" fill="none" stroke="black"></path>
-                <path d="M 408,768 L 424,768" fill="none" stroke="black"></path>
-                <path d="M 448,768 L 464,768" fill="none" stroke="black"></path>
-                <path d="M 488,768 L 504,768" fill="none" stroke="black"></path>
-                <path d="M 528,768 L 544,768" fill="none" stroke="black"></path>
-                <path d="M 240,816 L 256,816" fill="none" stroke="black"></path>
-                <path d="M 280,816 L 296,816" fill="none" stroke="black"></path>
-                <path d="M 320,816 L 336,816" fill="none" stroke="black"></path>
-                <path d="M 360,816 L 376,816" fill="none" stroke="black"></path>
-                <path d="M 400,816 L 416,816" fill="none" stroke="black"></path>
-                <path d="M 448,816 L 464,816" fill="none" stroke="black"></path>
-                <path d="M 488,816 L 504,816" fill="none" stroke="black"></path>
-                <path d="M 528,816 L 552,816" fill="none" stroke="black"></path>
-                <polygon class="arrowhead" points="552,768 540,762.4 540,773.6" fill="black" transform="rotate(0,544,768)"></polygon>
-                <polygon class="arrowhead" points="552,400 540,394.4 540,405.6" fill="black" transform="rotate(0,544,400)"></polygon>
-                <polygon class="arrowhead" points="552,160 540,154.4 540,165.6" fill="black" transform="rotate(0,544,160)"></polygon>
-                <polygon class="arrowhead" points="552,96 540,90.4 540,101.6" fill="black" transform="rotate(0,544,96)"></polygon>
-                <polygon class="arrowhead" points="248,816 236,810.4 236,821.6" fill="black" transform="rotate(180,240,816)"></polygon>
-                <polygon class="arrowhead" points="248,464 236,458.4 236,469.6" fill="black" transform="rotate(180,240,464)"></polygon>
-                <polygon class="arrowhead" points="248,160 236,154.4 236,165.6" fill="black" transform="rotate(180,240,160)"></polygon>
-                <polygon class="arrowhead" points="248,96 236,90.4 236,101.6" fill="black" transform="rotate(180,240,96)"></polygon>
-                <polygon class="arrowhead" points="232,608 220,602.4 220,613.6" fill="black" transform="rotate(0,224,608)"></polygon>
-                <polygon class="arrowhead" points="232,336 220,330.4 220,341.6" fill="black" transform="rotate(0,224,336)"></polygon>
+                <path d="M 256,48 L 256,224" fill="none" stroke="black"></path>
+                <path d="M 256,304 L 256,624" fill="none" stroke="black"></path>
+                <path d="M 256,688 L 256,848" fill="none" stroke="black"></path>
+                <path d="M 576,48 L 576,224" fill="none" stroke="black"></path>
+                <path d="M 576,304 L 576,624" fill="none" stroke="black"></path>
+                <path d="M 576,736 L 576,848" fill="none" stroke="black"></path>
+                <path d="M 264,96 L 288,96" fill="none" stroke="black"></path>
+                <path d="M 312,96 L 328,96" fill="none" stroke="black"></path>
+                <path d="M 352,96 L 368,96" fill="none" stroke="black"></path>
+                <path d="M 392,96 L 408,96" fill="none" stroke="black"></path>
+                <path d="M 432,96 L 448,96" fill="none" stroke="black"></path>
+                <path d="M 472,96 L 488,96" fill="none" stroke="black"></path>
+                <path d="M 512,96 L 528,96" fill="none" stroke="black"></path>
+                <path d="M 552,96 L 568,96" fill="none" stroke="black"></path>
+                <path d="M 264,160 L 288,160" fill="none" stroke="black"></path>
+                <path d="M 312,160 L 328,160" fill="none" stroke="black"></path>
+                <path d="M 352,160 L 368,160" fill="none" stroke="black"></path>
+                <path d="M 392,160 L 408,160" fill="none" stroke="black"></path>
+                <path d="M 432,160 L 448,160" fill="none" stroke="black"></path>
+                <path d="M 472,160 L 488,160" fill="none" stroke="black"></path>
+                <path d="M 512,160 L 528,160" fill="none" stroke="black"></path>
+                <path d="M 552,160 L 568,160" fill="none" stroke="black"></path>
+                <path d="M 8,256 L 576,256" fill="none" stroke="black"></path>
+                <path d="M 8,336 L 248,336" fill="none" stroke="black"></path>
+                <path d="M 256,400 L 568,400" fill="none" stroke="black"></path>
+                <path d="M 264,464 L 576,464" fill="none" stroke="black"></path>
+                <path d="M 16,528 L 256,528" fill="none" stroke="black"></path>
+                <path d="M 8,608 L 248,608" fill="none" stroke="black"></path>
+                <path d="M 8,656 L 576,656" fill="none" stroke="black"></path>
+                <path d="M 256,768 L 280,768" fill="none" stroke="black"></path>
+                <path d="M 304,768 L 320,768" fill="none" stroke="black"></path>
+                <path d="M 344,768 L 360,768" fill="none" stroke="black"></path>
+                <path d="M 384,768 L 400,768" fill="none" stroke="black"></path>
+                <path d="M 432,768 L 448,768" fill="none" stroke="black"></path>
+                <path d="M 472,768 L 488,768" fill="none" stroke="black"></path>
+                <path d="M 512,768 L 528,768" fill="none" stroke="black"></path>
+                <path d="M 552,768 L 568,768" fill="none" stroke="black"></path>
+                <path d="M 264,816 L 280,816" fill="none" stroke="black"></path>
+                <path d="M 304,816 L 320,816" fill="none" stroke="black"></path>
+                <path d="M 344,816 L 360,816" fill="none" stroke="black"></path>
+                <path d="M 384,816 L 400,816" fill="none" stroke="black"></path>
+                <path d="M 424,816 L 440,816" fill="none" stroke="black"></path>
+                <path d="M 472,816 L 488,816" fill="none" stroke="black"></path>
+                <path d="M 512,816 L 528,816" fill="none" stroke="black"></path>
+                <path d="M 552,816 L 576,816" fill="none" stroke="black"></path>
+                <polygon class="arrowhead" points="576,768 564,762.4 564,773.6" fill="black" transform="rotate(0,568,768)"></polygon>
+                <polygon class="arrowhead" points="576,400 564,394.4 564,405.6" fill="black" transform="rotate(0,568,400)"></polygon>
+                <polygon class="arrowhead" points="576,160 564,154.4 564,165.6" fill="black" transform="rotate(0,568,160)"></polygon>
+                <polygon class="arrowhead" points="576,96 564,90.4 564,101.6" fill="black" transform="rotate(0,568,96)"></polygon>
+                <polygon class="arrowhead" points="272,816 260,810.4 260,821.6" fill="black" transform="rotate(180,264,816)"></polygon>
+                <polygon class="arrowhead" points="272,464 260,458.4 260,469.6" fill="black" transform="rotate(180,264,464)"></polygon>
+                <polygon class="arrowhead" points="272,160 260,154.4 260,165.6" fill="black" transform="rotate(180,264,160)"></polygon>
+                <polygon class="arrowhead" points="272,96 260,90.4 260,101.6" fill="black" transform="rotate(180,264,96)"></polygon>
+                <polygon class="arrowhead" points="256,608 244,602.4 244,613.6" fill="black" transform="rotate(0,248,608)"></polygon>
+                <polygon class="arrowhead" points="256,336 244,330.4 244,341.6" fill="black" transform="rotate(0,248,336)"></polygon>
                 <polygon class="arrowhead" points="24,528 12,522.4 12,533.6" fill="black" transform="rotate(180,16,528)"></polygon>
                 <g class="text">
                   <text x="8" y="36">U</text>
-                  <text x="232" y="36">V</text>
-                  <text x="552" y="36">W</text>
-                  <text x="336" y="84">Establish</text>
-                  <text x="404" y="84">secure</text>
-                  <text x="464" y="84">channel</text>
-                  <text x="308" y="116">(e.g.,</text>
-                  <text x="352" y="116">TLS</text>
-                  <text x="388" y="116">with</text>
-                  <text x="436" y="116">server</text>
-                  <text x="492" y="116">cert.)</text>
-                  <text x="280" y="148">Proof</text>
-                  <text x="316" y="148">of</text>
-                  <text x="372" y="148">possession</text>
-                  <text x="444" y="148">w.r.t.</text>
-                  <text x="492" y="148">CRED</text>
-                  <text x="356" y="180">(e.g.,</text>
-                  <text x="412" y="180">EDHOC)</text>
-                  <text x="212" y="276">CORE</text>
-                  <text x="268" y="276">PROTOCOL</text>
-                  <text x="80" y="324">EDHOC</text>
-                  <text x="144" y="324">message_1</text>
+                  <text x="256" y="36">V</text>
+                  <text x="576" y="36">W</text>
+                  <text x="360" y="84">Establish</text>
+                  <text x="428" y="84">secure</text>
+                  <text x="488" y="84">channel</text>
+                  <text x="332" y="116">(e.g.,</text>
+                  <text x="376" y="116">TLS</text>
+                  <text x="412" y="116">with</text>
+                  <text x="460" y="116">server</text>
+                  <text x="516" y="116">cert.)</text>
+                  <text x="304" y="148">Proof</text>
+                  <text x="340" y="148">of</text>
+                  <text x="396" y="148">possession</text>
+                  <text x="468" y="148">w.r.t.</text>
+                  <text x="516" y="148">CRED</text>
+                  <text x="380" y="180">(e.g.,</text>
+                  <text x="436" y="180">EDHOC)</text>
+                  <text x="228" y="276">CORE</text>
+                  <text x="284" y="276">PROTOCOL</text>
+                  <text x="104" y="324">EDHOC</text>
+                  <text x="168" y="324">message_1</text>
                   <text x="52" y="356">(EAD_1</text>
                   <text x="88" y="356">=</text>
                   <text x="124" y="356">LOC_W,</text>
-                  <text x="184" y="356">ENC_ID)</text>
-                  <text x="328" y="388">Voucher</text>
-                  <text x="392" y="388">Request</text>
-                  <text x="452" y="388">(VREQ)</text>
-                  <text x="336" y="420">(message_1,</text>
-                  <text x="444" y="420">?opaque_state)</text>
-                  <text x="328" y="452">Voucher</text>
-                  <text x="396" y="452">Response</text>
-                  <text x="460" y="452">(VRES)</text>
-                  <text x="296" y="484">(message_1,</text>
-                  <text x="380" y="484">Voucher,</text>
-                  <text x="476" y="484">?opaque_state)</text>
-                  <text x="80" y="516">EDHOC</text>
-                  <text x="144" y="516">message_2</text>
-                  <text x="76" y="548">(EAD_2</text>
-                  <text x="112" y="548">=</text>
-                  <text x="156" y="548">Voucher)</text>
-                  <text x="80" y="596">EDHOC</text>
-                  <text x="144" y="596">message_3</text>
-                  <text x="516" y="708">Credential</text>
-                  <text x="524" y="724">Database</text>
-                  <text x="328" y="756">ID_CRED_I</text>
-                  <text x="388" y="756">from</text>
-                  <text x="448" y="756">message_3</text>
-                  <text x="396" y="804">CRED_U</text>
+                  <text x="200" y="356">ENC_U_INFO)</text>
+                  <text x="352" y="388">Voucher</text>
+                  <text x="416" y="388">Request</text>
+                  <text x="476" y="388">(VREQ)</text>
+                  <text x="360" y="420">(message_1,</text>
+                  <text x="468" y="420">?opaque_state)</text>
+                  <text x="352" y="452">Voucher</text>
+                  <text x="420" y="452">Response</text>
+                  <text x="484" y="452">(VRES)</text>
+                  <text x="320" y="484">(message_1,</text>
+                  <text x="404" y="484">Voucher,</text>
+                  <text x="500" y="484">?opaque_state)</text>
+                  <text x="104" y="516">EDHOC</text>
+                  <text x="168" y="516">message_2</text>
+                  <text x="100" y="548">(EAD_2</text>
+                  <text x="136" y="548">=</text>
+                  <text x="180" y="548">Voucher)</text>
+                  <text x="104" y="596">EDHOC</text>
+                  <text x="168" y="596">message_3</text>
+                  <text x="540" y="708">Credential</text>
+                  <text x="548" y="724">Database</text>
+                  <text x="352" y="756">ID_CRED_I</text>
+                  <text x="412" y="756">from</text>
+                  <text x="472" y="756">message_3</text>
+                  <text x="420" y="804">CRED_U</text>
                 </g>
               </svg><a href="#section-4.1-4.1.1" class="pilcrow">¶</a>
 </div>
@@ -1774,7 +1774,7 @@ Voucher_Info = bstr .cbor Voucher_Info_Seq
 <pre>
 Voucher_Info_Seq = (
     LOC_W:      tstr,
-    ENC_ID:     bstr
+    ENC_U_INFO:     bstr
 )
 </pre><a href="#section-4.4.1-3" class="pilcrow">¶</a>
 </div>
@@ -1784,10 +1784,10 @@ Voucher_Info_Seq = (
               <p id="section-4.4.1-5.1.1">LOC_W is a text string used by V to locate W, e.g., a URI or a domain name.<a href="#section-4.4.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.4.1-5.2">
-              <p id="section-4.4.1-5.2.1">ENC_ID is a byte string containing an encrypted identifier of U, calculated as follows:<a href="#section-4.4.1-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.1-5.2.1">ENC_U_INFO is a byte string containing an encrypted identifier of U and, optionally, opaque application data prepared by U. It is calculated as follows:<a href="#section-4.4.1-5.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.4.1-6">ENC_ID is 'ciphertext' of COSE_Encrypt0 (<span><a href="https://rfc-editor.org/rfc/rfc9052#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>) computed from the following:<a href="#section-4.4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.4.1-6">ENC_U_INFO is 'ciphertext' of COSE_Encrypt0 (<span><a href="https://rfc-editor.org/rfc/rfc9052#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>) computed from the following:<a href="#section-4.4.1-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4.1-7.1">
               <p id="section-4.4.1-7.1.1">The encryption key K_1 and nonce IV_1 are derived as specified below.<a href="#section-4.4.1-7.1.1" class="pilcrow">¶</a></p>
@@ -1803,14 +1803,15 @@ Voucher_Info_Seq = (
 <pre>
 plaintext = (
     ID_U:            bstr,
- )
+    ?OPAQUE_INFO:    bstr,
+)
 </pre><a href="#section-4.4.1-8" class="pilcrow">¶</a>
 </div>
 <div class="alignLeft art-text artwork" id="section-4.4.1-9">
 <pre>
 external_aad = (
     SS:              int,
- )
+)
 </pre><a href="#section-4.4.1-9" class="pilcrow">¶</a>
 </div>
 <p id="section-4.4.1-10">where<a href="#section-4.4.1-10" class="pilcrow">¶</a></p>
@@ -1819,7 +1820,10 @@ external_aad = (
               <p id="section-4.4.1-11.1.1">ID_U is an identifier of the device, see <a href="#device" class="auto internal xref">Section 3.1</a>.<a href="#section-4.4.1-11.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.4.1-11.2">
-              <p id="section-4.4.1-11.2.1">SS is the selected cipher suite in SUITES_I of EDHOC message_1, see <a href="#U-V" class="auto internal xref">Section 4.5</a>.<a href="#section-4.4.1-11.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.1-11.2.1">OPAQUE_INFO is an opaque field provided by the application. If present, it will contain application data that U may want to convey to W.<a href="#section-4.4.1-11.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.1-11.3">
+              <p id="section-4.4.1-11.3.1">SS is the selected cipher suite in SUITES_I of EDHOC message_1, see <a href="#U-V" class="auto internal xref">Section 4.5</a>.<a href="#section-4.4.1-11.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-4.4.1-12">The external_aad is wrapped in an enc_structure as defined in <span><a href="https://rfc-editor.org/rfc/rfc9052#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>.<a href="#section-4.4.1-12" class="pilcrow">¶</a></p>
@@ -1855,29 +1859,37 @@ external_aad = (
           <h4 id="name-voucher">
 <a href="#section-4.4.2" class="section-number selfRef">4.4.2. </a><a href="#name-voucher" class="section-name selfRef">Voucher</a>
           </h4>
-<p id="section-4.4.2-1">The voucher is an assertion to U that W has authorized V. The voucher is essentially a message authentication code which binds the authentication credential of V, CRED_V, to message_1 of EDHOC.<a href="#section-4.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.4.2-2">The external authorization data EAD_2 contains an EAD item with ead_label = TBD1 and ead_value = Voucher, which is a CBOR byte string:<a href="#section-4.4.2-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.4.2-3">
+<p id="section-4.4.2-1">The voucher is an assertion to U that W has authorized V.
+The voucher consists of the 'ciphertext' field of a COSE_Encrypt0 object:<a href="#section-4.4.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.4.2-2">
 <pre>
-Voucher = bstr .cbor EDHOC-Expand(PRK, info, length)
-</pre><a href="#section-4.4.2-3" class="pilcrow">¶</a>
+Voucher = COSE_Encrypt0.ciphertext
+</pre><a href="#section-4.4.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.4.2-4">The voucher is calculated with the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.4.2-3">Its corresponding plaintext value consists of an opaque field that can be used by W to convey information to U, such as a voucher scope.
+The authentication tag present in the ciphertext is also bound to message_1 and the credential of V.<a href="#section-4.4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.4.2-4">The external authorization data EAD_2 contains an EAD item with ead_label = TBD1 and ead_value = Voucher, which is computed from the following:<a href="#section-4.4.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4.2-5.1">
-              <p id="section-4.4.2-5.1.1">info_label = 2<a href="#section-4.4.2-5.1.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.2-5.1.1">The encryption key K_2 and nonce IV_2 are derived as specified below.<a href="#section-4.4.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.4.2-5.2">
-              <p id="section-4.4.2-5.2.1">context  = bstr .cbor voucher_input<a href="#section-4.4.2-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.2-5.2.1">'protected' is a byte string of size 0<a href="#section-4.4.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.4.2-5.3">
-              <p id="section-4.4.2-5.3.1">length is EDHOC MAC length in bytes<a href="#section-4.4.2-5.3.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.2-5.3.1">'plaintext' and 'external_aad' as below:<a href="#section-4.4.2-5.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.4.2-6">where context is a CBOR byte string wrapping of the following CBOR sequence:<a href="#section-4.4.2-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.4.2-6">
+<pre>
+plaintext = (
+    ?OPAQUE_INFO: bstr
+)
+</pre><a href="#section-4.4.2-6" class="pilcrow">¶</a>
+</div>
 <div class="alignLeft art-text artwork" id="section-4.4.2-7">
 <pre>
-voucher_input = (
+external_aad = (
     H(message_1):  bstr,
     CRED_V:        bstr,
 )
@@ -1886,10 +1898,37 @@ voucher_input = (
 <p id="section-4.4.2-8">where<a href="#section-4.4.2-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4.2-9.1">
-              <p id="section-4.4.2-9.1.1">H(message_1) is the hash of EDHOC message_1, calculated from the associated voucher request, see <a href="#voucher_request" class="auto internal xref">Section 4.6.1</a>.<a href="#section-4.4.2-9.1.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.2-9.1.1">OPAQUE_INFO is an opaque field provided by the application.<a href="#section-4.4.2-9.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.4.2-9.2">
-              <p id="section-4.4.2-9.2.1">CRED_V is the CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing the public authentication key of V, see <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a><a href="#section-4.4.2-9.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.4.2-9.2.1">H(message_1) is the hash of EDHOC message_1, calculated from the associated voucher request, see <a href="#voucher_request" class="auto internal xref">Section 4.6.1</a>.<a href="#section-4.4.2-9.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.2-9.3">
+              <p id="section-4.4.2-9.3.1">CRED_V is the CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing the public authentication key of V, see <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a><a href="#section-4.4.2-9.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-4.4.2-10">The derivation of K_2 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.2-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.4.2-11.1">
+              <p id="section-4.4.2-11.1.1">info_label = 2<a href="#section-4.4.2-11.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.2-11.2">
+              <p id="section-4.4.2-11.2.1">context  = h'' (the empty CBOR string)<a href="#section-4.4.2-11.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.2-11.3">
+              <p id="section-4.4.2-11.3.1">length is length of key of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.2-11.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-4.4.2-12">The derivation of IV_2 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.2-12" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.4.2-13.1">
+              <p id="section-4.4.2-13.1.1">info_label = 3<a href="#section-4.4.2-13.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.2-13.2">
+              <p id="section-4.4.2-13.2.1">context = h''  (the empty CBOR string)<a href="#section-4.4.2-13.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.4.2-13.3">
+              <p id="section-4.4.2-13.3.1">length is length of nonce of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.2-13.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2032,12 +2071,13 @@ Voucher_Request = [
                 <p id="section-4.6.1.2-3.2.1">G_X - the ephemeral public key of U<a href="#section-4.6.1.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.6.1.2-3.3">
-                <p id="section-4.6.1.2-3.3.1">ENC_ID - the encryption of the device identifier ID_U, contained in the Voucher_Info field of the EAD item with ead_label = TBD1 (with minus sign indicating criticality)<a href="#section-4.6.1.2-3.3.1" class="pilcrow">¶</a></p>
+                <p id="section-4.6.1.2-3.3.1">ENC_U_INFO - the encryption of (1) the device identifier ID_U and (2) the optional OPAQUE_INFO field, contained in the Voucher_Info field of the EAD item with ead_label = TBD1 (with minus sign indicating criticality)<a href="#section-4.6.1.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-4.6.1.2-4">W verifies and decrypts ENC_ID using the relevant algorithms of the selected cipher suite SS (see <a href="#reuse" class="auto internal xref">Section 4.2</a>), and obtains ID_U.<a href="#section-4.6.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.6.1.2-5">W calculates the hash of message_1 H(message_1), and associates this session identifier to the device identifier ID_U. If H(message_1) is not unique among session identifiers associated to this device identifier of U, the EDHOC session SHALL be aborted.<a href="#section-4.6.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-4.6.1.2-6">W uses ID_U to look up the associated authorization policies for U and enforces them. This is out of scope for the specification.<a href="#section-4.6.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.6.1.2-4">W verifies and decrypts ENC_U_INFO using the relevant algorithms of the selected cipher suite SS (see <a href="#reuse" class="auto internal xref">Section 4.2</a>), and obtains ID_U.<a href="#section-4.6.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.6.1.2-5">In case OPAQUE_INFO is present, it is made available to the application.<a href="#section-4.6.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.6.1.2-6">W calculates the hash of message_1 H(message_1), and associates this session identifier to the device identifier ID_U. If H(message_1) is not unique among session identifiers associated to this device identifier of U, the EDHOC session SHALL be aborted.<a href="#section-4.6.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.6.1.2-7">W uses ID_U to look up the associated authorization policies for U and enforces them. This is out of scope for the specification.<a href="#section-4.6.1.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
