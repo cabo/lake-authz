@@ -89,6 +89,7 @@ Table of Contents
      4.4.  Device <-> Enrollment Server (U <-> W)
      4.5.  Device <-> Authenticator (U <-> V)
      4.6.  Authenticator <-> Enrollment Server (V <-> W)
+     4.7.  Error Handling
    5.  REST Interface at W
      5.1.  Scheme "https"
      5.2.  Scheme "coaps"
@@ -833,6 +834,81 @@ U                              V                                       W
    response is successfully received from W, then V responds to U with
    EDHOC message_2 as described in Section 4.5.2.1.
 
+4.7.  Error Handling
+
+   This section specifies a new EDHOC error code and how it is used in
+   the proposed protocol.
+
+4.7.1.  EDHOC Error "Access denied"
+
+   This section specifies the new EDHOC error "Access denied", see
+   Figure 4.
+
+  +----------+----------------+----------------------------------------+
+  | ERR_CODE | ERR_INFO Type  | Description                            |
+  +==========+================+========================================+
+  |     TBD3 | error_content  | Access denied                          |
+  +----------+----------------+----------------------------------------+
+
+  Figure 4: EDHOC error code and error information for ‘Access denied’.
+
+   Error code TBD3 is used to indicate to the receiver that access
+   control has been applied and the sender has aborted the EDHOC
+   session.  The ERR_INFO field contains error_content which is a CBOR
+   Sequence consisting of an integer and an optional byte string.
+
+   error_content = (
+     REJECT_TYPE : int,
+     ? REJECT_INFO : bstr,
+   )
+
+   The purpose of REJECT_INFO is for the sender to provide verifiable
+   and actionable information to the receiver about the error, so that
+   an automated action may be taken to enable access.
+
+  +-------------+---------------+--------------------------------------+
+  | REJECT_TYPE | REJECT_INFO   | Description                          |
+  +=============+===============+======================================+
+  |           0 | -             | No REJECT_INFO                       |
+  +-------------+---------------+--------------------------------------+
+  |           1 | bstr          | REJECT_INFO from trusted third party |
+  +-------------+---------------+--------------------------------------+
+
+        Figure 5: REJECT_TYPE and REJECT_INFO for ‘Access denied’.
+
+4.7.2.  Error handling in W, V, and U
+
+   This protocol uses the EDHOC Error "Access denied" in the following
+   way:
+
+   *  W generates error_content and transfers it to V via the secure
+      connection.  If REJECT_TYPE is 1, then REJECT_INFO is encrypted
+      from W to U using the EDHOC AEAD algorithm.
+
+   *  V receives error_content, prepares an EDHOC "Access denied" error,
+      and sends to U
+
+   *  U receives the error message and extracts the error_content.  If
+      REJECT_TYPE is 1, then U decrypts REJECT_INFO, based on which it
+      may retry to gain access.
+
+   The encryption of REJECT_INFO follows a procedure analogous to the
+   one defined in Section 4.4.1, with the following differences:
+
+   plaintext = (
+       TBD4:            bstr,
+    )
+
+   external_aad = (
+       TBD5:            int,
+    )
+
+   where
+
+   *  TBD4 is TODO.
+
+   *  TBD5 is TODO.
+
 5.  REST Interface at W
 
    The interaction between V and W is enabled through a RESTful
@@ -969,7 +1045,7 @@ U                              V                                       W
 
    IANA has registered the following entry in the "EDHOC External
    Authorization Data" registry under the group name "Ephemeral Diffie-
-   Hellman Over COSE (EDHOC)".  The ead_label = TBD_1 corresponds to the
+   Hellman Over COSE (EDHOC)".  The ead_label = TBD1 corresponds to the
    ead_value Voucher_Info in EAD_1, and Voucher in EAD_2 with processing
    specified in Section 4.5.1 and Section 4.5.2, respectively, of this
    document.
@@ -1204,7 +1280,7 @@ Appendix A.  Use with Constrained Join Protocol (CoJP)
    |            CoJP response           |                              |
    |
 
-             Figure 4: Use of draft-ietf-lake-authz with CoJP.
+             Figure 6: Use of draft-ietf-lake-authz with CoJP.
 
 A.1.  Network Discovery
 
@@ -1226,7 +1302,7 @@ A.1.  Network Discovery
    away from the domain authenticator (V), in which case it plays the
    role of a Join Proxy (see [RFC9031]).  Join Proxy does not
    participate in the protocol and acts as a transparent router between
-   the device and the domain authenticator.  For simplicity, Figure 4
+   the device and the domain authenticator.  For simplicity, Figure 6
    illustrates the case when the device and the domain authenticator are
    a single hop away and can communicate directly.
 
