@@ -5,12 +5,12 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 29 August 2024                                       M. Vučinić
+Expires: 30 August 2024                                       M. Vučinić
                                                           G. Fedrecheski
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
-                                                        26 February 2024
+                                                        27 February 2024
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2024.
+   This Internet-Draft will expire on 30 August 2024.
 
 Copyright Notice
 
@@ -886,28 +886,31 @@ U                              V                                       W
       from W to U using the EDHOC AEAD algorithm.
 
    *  V receives error_content, prepares an EDHOC "Access denied" error,
-      and sends to U
+      and sends it to U.
 
    *  U receives the error message and extracts the error_content.  If
       REJECT_TYPE is 1, then U decrypts REJECT_INFO, based on which it
       may retry to gain access.
 
    The encryption of REJECT_INFO follows a procedure analogous to the
-   one defined in Section 4.4.1, with the following differences:
+   one defined in Section 4.4.2, with the following differences:
 
    plaintext = (
-       TBD4:            bstr,
+       OPAQUE_INFO:     bstr,
     )
 
    external_aad = (
-       TBD5:            int,
+       H(message_1):    bstr,
     )
 
    where
 
-   *  TBD4 is TODO.
+   *  OPAQUE_INFO is an opaque field that contains actionable
+      information about the error.  It may contain, for example, a list
+      of suggested Vs through which U should join instead.
 
-   *  TBD5 is TODO.
+   *  H(message_1) is the hash of EDHOC message_1, calculated from the
+      associated voucher request, see Section 4.6.1.
 
 5.  REST Interface at W
 
