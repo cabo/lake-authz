@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-25T01:09:22.227241+00:00",
+  "timestamp": "2024-02-27T01:04:28.496057+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -131,7 +131,7 @@
       "labels": [],
       "body": "During the IETF-118 meeting, it was discussed whether the Voucher should include a scope. One simple alternative would be to propose an opaque \"scope\" field whose usage details would be left to the application.",
       "createdAt": "2023-12-04T09:43:53Z",
-      "updatedAt": "2023-12-04T14:46:22Z",
+      "updatedAt": "2024-02-26T14:29:02Z",
       "closedAt": null,
       "comments": [
         {
@@ -140,6 +140,13 @@
           "body": "As discussed in the last design team meeting, we do plan to include a scope field. That may involve updating the Voucher structure to be a COSE_Encrypt0, where ciphertext is the concatenation of encrypted-plaintext (empty) and the voucher MAC. The scope can then be included in the encrypted-plaintext or in the (un)protected header. \r\n\r\nThe scope would convey information to U about V, such as capabilities of V, usage policies, etc. I think we need to think of a few concrete examples here.",
           "createdAt": "2023-12-04T09:51:42Z",
           "updatedAt": "2023-12-04T14:46:22Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "After the merge of #11, the voucher can now include extra data, such as a scope. The actual contents that we may wish to send, however, may not be a scope as much as _assertions_ or _directives_ from W to U. ",
+          "createdAt": "2024-02-26T14:29:02Z",
+          "updatedAt": "2024-02-26T14:29:02Z"
         }
       ]
     },
@@ -148,16 +155,24 @@
       "id": "I_kwDOKiCa6c58nPKX",
       "title": "Add error handling",
       "url": "https://github.com/lake-wg/authz/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The protocol should include an error handling mechanism. Below is a first sketch as well as a few considerations to be discussed:\r\n\r\n```\r\nW may answer Voucher Request with a Voucher Error (VERR):\r\n\r\nVERR = (code: uint, ?info: bstr)\r\n```\r\n\r\nNotes:\r\n- security: VERR should be encrypted and integrity-protected, e.g. `COSE_Encrypt0` from W to U, just like `ENC_ID` on `EAD_1`\r\n- how to transport: \r\n  - W to V: the encrypted VERR is sent via the secure channel already established between both parties\r\n  - V to U: we can possibly reuse EDHOC's error signalling (see [lake-edhoc#section-6](https://www.ietf.org/archive/id/draft-ietf-lake-edhoc-22.html#section-6)). Thus the encrypted VERR could be the content of `ERR_INFO`. Note that this might require declaring a new EDHOC `ERR_CODE`, so that `ERR_INFO` can have a content of type `bstr`.\r\n\r\ncc @gselander @malishav ",
       "createdAt": "2024-01-19T14:15:31Z",
-      "updatedAt": "2024-01-19T14:15:31Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-02-26T14:30:25Z",
+      "closedAt": "2024-02-26T14:30:25Z",
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Solved in #9.",
+          "createdAt": "2024-02-26T14:30:25Z",
+          "updatedAt": "2024-02-26T14:30:25Z"
+        }
+      ]
     },
     {
       "number": 6,
@@ -291,24 +306,26 @@
       "id": "PR_kwDOKiCa6c5lI2rP",
       "title": "Add error section",
       "url": "https://github.com/lake-wg/authz/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Adding an error handling section. Work in progress.",
       "createdAt": "2024-01-26T08:45:49Z",
-      "updatedAt": "2024-02-13T13:25:10Z",
+      "updatedAt": "2024-02-26T14:29:44Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
-      "baseRefOid": "c94faabf06cb97e2881248c1ece8f652c7ec5c7b",
+      "baseRefOid": "981e71af06900d26281ad51507708c9167f659d0",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-error-section",
-      "headRefOid": "0de86f180103e333ee7709b87ca3df7f01e2ae63",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "51513df38aae5375109898650f7a6e58597f67b2",
+      "closedAt": "2024-02-26T14:29:42Z",
+      "mergedAt": "2024-02-26T14:29:42Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "e678db91e8e64fb6a9290b8f6b554438b21b864f"
+      },
       "comments": [],
       "reviews": []
     },
@@ -324,13 +341,13 @@
       "labels": [],
       "body": "Addresses #6.",
       "createdAt": "2024-01-29T16:36:41Z",
-      "updatedAt": "2024-02-09T16:35:09Z",
+      "updatedAt": "2024-02-26T16:59:42Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
-      "baseRefOid": "2bf9001c881352d01d91e93393601bc5c126889e",
+      "baseRefOid": "e678db91e8e64fb6a9290b8f6b554438b21b864f",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-examples-section",
-      "headRefOid": "6b42ae8de11a31c0599d96aa3f151464bb318a94",
+      "headRefOid": "90b1848a731b1b90cd15e2a08663f0259a413d70",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -351,24 +368,26 @@
       "id": "PR_kwDOKiCa6c5lkfiV",
       "title": "Ability to transfer opaque application data",
       "url": "https://github.com/lake-wg/authz/pull/11",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addressing #3.\r\n\r\nThe idea is to use 'ciphertext' from COSE_Encrypt0, which already has a MAC (the authentication tag), with the added benefit that now it is possible for W to send encrypted opaque data to U.",
       "createdAt": "2024-01-31T13:21:39Z",
-      "updatedAt": "2024-02-13T13:24:07Z",
+      "updatedAt": "2024-02-26T14:24:55Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
       "baseRefOid": "c94faabf06cb97e2881248c1ece8f652c7ec5c7b",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-scope-to-voucher",
       "headRefOid": "5ed20fef1632f3796b7bd4e4d4642b2826844326",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-02-26T14:24:44Z",
+      "mergedAt": "2024-02-26T14:24:44Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "981e71af06900d26281ad51507708c9167f659d0"
+      },
       "comments": [
         {
           "author": "geonnave",
@@ -486,6 +505,32 @@
       "mergeCommit": {
         "oid": "c94faabf06cb97e2881248c1ece8f652c7ec5c7b"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOKiCa6c5n8MbF",
+      "title": "Update error content with opaque info",
+      "url": "https://github.com/lake-wg/authz/pull/15",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-26T16:51:16Z",
+      "updatedAt": "2024-02-26T16:51:16Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "e678db91e8e64fb6a9290b8f6b554438b21b864f",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "update-erorr-with-opaque-info",
+      "headRefOid": "cd11bd4ea42bb99fb69f70399b2f43aa1d191c0d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
