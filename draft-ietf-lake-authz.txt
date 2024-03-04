@@ -1336,9 +1336,6 @@ A.2.1.  Flight 1
 
    *  The Uri-Path option is set to ".well-known/edhoc".
 
-   *  The Content-Format option is set to "application/cid-edhoc+cbor-
-      seq"
-
    *  The payload is the (true, EDHOC message_1) CBOR sequence, where
       EDHOC message_1 is constructed as defined in Section 4.5.
 
@@ -1352,8 +1349,6 @@ A.2.2.  Flight 2
    authenticator SHALL map the message to a CoAP response:
 
    *  The response code is 2.04 Changed.
-
-   *  The Content-Format option is set to "application/edhoc+cbor-seq"
 
    *  The payload is the EDHOC message_2, as defined in Section 4.5.
 
