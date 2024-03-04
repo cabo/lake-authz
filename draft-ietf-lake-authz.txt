@@ -5,12 +5,12 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 30 August 2024                                       M. Vučinić
+Expires: 5 September 2024                                     M. Vučinić
                                                           G. Fedrecheski
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
-                                                        27 February 2024
+                                                            4 March 2024
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 August 2024.
+   This Internet-Draft will expire on 5 September 2024.
 
 Copyright Notice
 
@@ -108,6 +108,9 @@ Table of Contents
    Appendix A.  Use with Constrained Join Protocol (CoJP)
      A.1.  Network Discovery
      A.2.  The Enrollment Protocol with Parameter Provisioning
+   Appendix B.  Enrollment Hints
+     B.1.  Domain Authenticator hints
+     B.2.  Device Hints
    Acknowledgments
    Authors' Addresses
 
@@ -1402,6 +1405,39 @@ A.2.4.  Flight 4
 
    Flight 4 is the OSCORE response carrying CoJP response message.  The
    message is processed as specified in Section 8.4.2 of [RFC9031].
+
+Appendix B.  Enrollment Hints
+
+   This section defines items that can be used in the OPAQUE_INFO field
+   of either EAD_1 or the Access Denied error response.  The purpose of
+   the proposed items is to improve protocol scalability, aiming to
+   reduce battery usage and enrollment delay.  The main use case is when
+   several potential gateways (V) are detected by U's radio, which can
+   lead to U trying to enroll (and failing) several times until it finds
+   a suitable V.
+
+B.1.  Domain Authenticator hints
+
+   In case W denies the enrollment of U to a given V, a list of Domain
+   Authenticator hints (v_hint) can be sent from W to U.  The hint is
+   optional and is included in the REJECT_INFO item in the Access Denied
+   error message.  It consists of a list of application-defined
+   identifiers of V (e.g.  MAC addresses, SSIDs, PAN IDs, etc.), as
+   defined below:
+
+   v_hint = [ 1* bstr ]
+
+B.2.  Device Hints
+
+   U may send a Device hint (u_hint) so that it can help W to select
+   which Vs to include in v_hint.  This can be useful in large scale
+   scenarios with many gateways (V).  The hint is an optional field
+   included in the OPAQUE_INFO field within EAD_1, and it must be
+   encrypted.  The hint itself is application dependent, and can contain
+   GPS coordinates, application-specific tags, the list of Vs detected
+   by U, or other relevant information.  It is defined as follows:
+
+   u_hint: [ 1* bstr ]
 
 Acknowledgments
 
