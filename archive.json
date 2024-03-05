@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-03T01:08:29.193606+00:00",
+  "timestamp": "2024-03-05T01:04:39.308931+00:00",
   "repo": "lake-wg/authz",
   "labels": [
     {
@@ -124,15 +124,15 @@
       "id": "I_kwDOKiCa6c54mweB",
       "title": " Should the voucher include a scope?",
       "url": "https://github.com/lake-wg/authz/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "During the IETF-118 meeting, it was discussed whether the Voucher should include a scope. One simple alternative would be to propose an opaque \"scope\" field whose usage details would be left to the application.",
       "createdAt": "2023-12-04T09:43:53Z",
-      "updatedAt": "2024-02-26T14:29:02Z",
-      "closedAt": null,
+      "updatedAt": "2024-03-04T17:21:43Z",
+      "closedAt": "2024-03-04T17:21:43Z",
       "comments": [
         {
           "author": "geonnave",
@@ -179,15 +179,15 @@
       "id": "I_kwDOKiCa6c58nZaT",
       "title": "Appendix or Examples section",
       "url": "https://github.com/lake-wg/authz/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "A section with example use cases for the protocol can improve readability of the spec.\r\n\r\nHere is a brief list of use cases that can serve as base for such section:\r\n\r\n```\r\n### UC1: voucher works, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: [u1]\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W accepts and replies Voucher Response\r\n\r\n### UC2: basic error response, 1 gateway\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1]\r\n- W\u2019s allowlist = v1: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n\r\n### UC3: basic error response, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error\r\n2. device u1 tries to join via gateway v2, W denies and replies Voucher Error\r\n3. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n\r\n### UC4: error includes gateway hint, 5 gateways\r\n\r\npremises:\r\n- devices = [u1, \u2026]\r\n- discovered_gateways = [v1, v2, v3, v4, v5] // sorted e.g. by rssi\r\n- W\u2019s allowlist = v1: [], v2: [], v3: [u1], v4: [u1], v5: []\r\n\r\nscenarios:\r\n1. device u1 tries to join via gateway v1, W denies and replies Voucher Error with hint = [v3, v4]\r\n2. device u1 tries to join via gateway v3, W accepts and replies Voucher Response\r\n```",
       "createdAt": "2024-01-19T14:40:26Z",
-      "updatedAt": "2024-01-26T12:16:42Z",
-      "closedAt": null,
+      "updatedAt": "2024-03-04T17:20:42Z",
+      "closedAt": "2024-03-04T17:20:42Z",
       "comments": [
         {
           "author": "gselander",
@@ -195,6 +195,13 @@
           "body": "Looks good to me. I think UC1 & UC4 (scenario 1) could be sufficient, perhaps start with them?",
           "createdAt": "2024-01-26T12:16:41Z",
           "updatedAt": "2024-01-26T12:16:41Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressed in #10 ",
+          "createdAt": "2024-03-04T17:20:42Z",
+          "updatedAt": "2024-03-04T17:20:42Z"
         }
       ]
     },
@@ -203,14 +210,62 @@
       "id": "I_kwDOKiCa6c58naZT",
       "title": "Device enrollment in the presence of many Vs",
       "url": "https://github.com/lake-wg/authz/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The access policies in W may contain a mapping of which Us are authorized to join via which Vs, e.g. `{v1: [u1, u2], v2: [u3]}`. In this case, if a device detects many Vs in its vicinity, it may have to try to exhaustively try to enroll via different Vs until it finds the right one (see use case UC3 in issue #6).\r\n\r\nA possible solution includes sharing more information between V and W, so that this process can be sped up. Here is an initial sketch of how it could look like:\r\n\r\n```\r\n# Enrollment hints\r\nThis section defines optional fields with the purpose of improving protocol scalability, aiming to reduce battery usage and enrollment delay.\r\nThe main use case is when several potential gateways (V) are detected by U's radio, which can lead to U trying to enroll (and failing) several times until it finds a suitable V.\r\n\r\n## Domain Authenticator hints\r\nIn case W denies the enrollment of U to a given V, a list of Domain Authenticator hints (v_hints) can be sent from W to U.\r\nThe hint is optional and is sent as part of an error message.\r\nIt consists of a list of application-defined identifiers of V (e.g. MAC addresses, SSIDs, PAN IDs, etc.), as defined below:\r\n\r\nv_hints = [ 1* bstr ]\r\n\r\n## Device hints\r\nU may send a Device hint (u_hint) so that it can help W to select which Vs to include in v_hints.\r\nThis can be useful in large scale scenarios with many gateways (V).\r\nThe hint is an optional field in EAD_1, and it must be encrypted.\r\nThe hint itself is application dependent, and can contain GPS coordinates, application-specific tags, the list of Vs detected by U, or other relevant information.\r\nIt is defined as follows:\r\n\r\nu_hint: [ 1* bstr ]\r\n```\r\n\r\nNotes:\r\n- related to #5, as `v_hint` would be carried in the Voucher Error message\r\n- all hints should be encrypted and integrity-protected, e.g., via `COSE_Encrypt0`",
       "createdAt": "2024-01-19T14:42:53Z",
-      "updatedAt": "2024-01-19T14:42:53Z",
+      "updatedAt": "2024-03-04T15:21:58Z",
+      "closedAt": "2024-03-04T15:21:58Z",
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Solved in #13 ",
+          "createdAt": "2024-03-04T15:21:58Z",
+          "updatedAt": "2024-03-04T15:21:58Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOKiCa6c6BK6d5",
+      "title": "Clarifications on the usage of OPAQUE_INFO",
+      "url": "https://github.com/lake-wg/authz/issues/17",
+      "state": "CLOSED",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> If could be good to clarify that \u201cOPAQUE_INFO\u201d is opaque when viewed as information element in EDHOC. It is opaque to V but the application in U and W can read the contents.\r\n\r\n^ by @gselander in [PR 13](https://github.com/lake-wg/authz/pull/13#issuecomment-1976265705).",
+      "createdAt": "2024-03-04T15:29:14Z",
+      "updatedAt": "2024-03-04T16:47:57Z",
+      "closedAt": "2024-03-04T16:47:56Z",
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Solved in #18 ",
+          "createdAt": "2024-03-04T16:47:57Z",
+          "updatedAt": "2024-03-04T16:47:57Z"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOKiCa6c6BK7k0",
+      "title": "Explain error response in the context of the VREQ/VRES protocol",
+      "url": "https://github.com/lake-wg/authz/issues/19",
+      "state": "OPEN",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See [previous comment](https://github.com/lake-wg/authz/pull/13#issuecomment-1976281759) by @gselander:\r\n\r\n```\r\nOne more comment:\r\n\r\n\"W generates error_content and transfers it to V via the secure connection.\"\r\n\r\nWe should explain how this message is part of the VREQ/VRES protocol. This is not necessary an error from the point of view of that protocol. If we don't have a quick fix, make a separate issue.\r\n\r\nEdit: For example, add a flag in VRES\r\n\r\nVoucher_Response = [\r\nmessage_1: bstr,\r\nflag: int,\r\nresponse: bstr,\r\n? opaque_state: bstr\r\n]\r\n\r\nflag = -1 is used with response = Voucher. In case of reject, then (flag, response) = error_content.\r\n\r\n(or other preferred construction)\r\n\r\nEdit: Or reserve REJECT_TYPE = 0 for the no reject case. The flag/ REJECT_TYPE thus becomes a status code for the VREQ/VRES protocol. Maybe rename \"REJECT_TYPE\" accordingly. Or leave out for this update.\r\n```",
+      "createdAt": "2024-03-04T15:31:19Z",
+      "updatedAt": "2024-03-04T15:31:19Z",
       "closedAt": null,
       "comments": []
     }
@@ -334,24 +389,26 @@
       "id": "PR_kwDOKiCa6c5lWPlr",
       "title": "Add Examples section (appendix)",
       "url": "https://github.com/lake-wg/authz/pull/10",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addresses #6.",
       "createdAt": "2024-01-29T16:36:41Z",
-      "updatedAt": "2024-02-28T15:45:13Z",
+      "updatedAt": "2024-03-04T17:20:15Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
-      "baseRefOid": "96776f116f44f9801783f6c325ebaeca81530de7",
+      "baseRefOid": "f4dc212f99e41b37be7aea286bf16b7381a3958b",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-examples-section",
-      "headRefOid": "2f91f68ecf2f1bfeacbb37959d8a276743832837",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "3fecd9ec90ba4324d6d37e76b55c2cc4e0bd4036",
+      "closedAt": "2024-03-04T17:20:10Z",
+      "mergedAt": "2024-03-04T17:20:09Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "c531dcdc9070063bf16dc5680b03678e234def9f"
+      },
       "comments": [
         {
           "author": "geonnave",
@@ -359,9 +416,72 @@
           "body": "Note that the second example (equivalent to UC4 in #6) does not include the `hint`, as it is not specified yet. It can be added back once that is done.",
           "createdAt": "2024-01-29T16:39:54Z",
           "updatedAt": "2024-01-29T16:39:54Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@gselander I added more details to the examples, do you want to take a look?",
+          "createdAt": "2024-03-04T14:21:24Z",
+          "updatedAt": "2024-03-04T14:21:24Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Looks good, but I didn't understand this:\r\n\r\n> the access policy in W specifies, via a list of ID_U, that device u1 can enroll via any domain authenticator, i.e., the list is: \\[14\\]\r\n\r\nHow can I understand that the list has this format?",
+          "createdAt": "2024-03-04T14:36:24Z",
+          "updatedAt": "2024-03-04T14:36:24Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Comparing with this in the second example. \r\n\r\n> {14, 39-63-C9-D0-5C-62}\r\n\r\nThe brackets are confusing, but is the absence of other entries (besides 14) in the previous example an indication that there is no restriction on what gateway?",
+          "createdAt": "2024-03-04T14:38:55Z",
+          "updatedAt": "2024-03-04T14:38:55Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> How can I understand that the list has this format?\r\n\r\nMy goal is just to provide an example of how the access policy could look like at W, while its exact format is out of scope (it is up to the authorization mechanism to define that).\r\n\r\nMaybe I could change it to `e.g., the access policy could look like this: [14]` (note the use of `e.g.` instead of `i.e.`) to make it clear that it is just an example.",
+          "createdAt": "2024-03-04T14:53:30Z",
+          "updatedAt": "2024-03-04T14:53:30Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> The brackets are confusing, but is the absence of other entries (besides 14) in the previous example an indication that there is no restriction on what gateway?\r\n\r\nYes, I intend for one example to have no restriction on the gateway, and another to have such restriction. The bracket notation is supposed to denote a mapping of ID_U and MAC Addresses, I can think of something else if that is not clear.",
+          "createdAt": "2024-03-04T14:56:10Z",
+          "updatedAt": "2024-03-04T14:56:10Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Yes, I intend for one example to have no restriction on the gateway, and another to have such restriction. The bracket notation is supposed to denote a mapping of ID_U and MAC Addresses, I can think of something else if that is not clear.\r\n\r\nYes, please change from \"i.e.\" to \"e.g.\", the former gives the impression that there is something that should be understood based on something else. The examples are fine. It would be good with a common notation was used in both examples, and perhaps also the asymmetry between the first element and the following element(s), for example (14; MAC1, MAC2, ...)  and (14; ). Or (14; *).",
+          "createdAt": "2024-03-04T15:19:36Z",
+          "updatedAt": "2024-03-04T15:19:36Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I re-arranged the text so that there is no \"expectation\" on formats that are not defined. In doing so I decided to keep `i.e.`, because using `e.g.` again within the example felt redundant.\r\n\r\nIn summary, the changes are:\r\n1. in the first example, I abstracted away the format of the policy\r\n2. in the second one, I defined the policy format, so that I could use `i.e.` to mean a clear implication",
+          "createdAt": "2024-03-04T16:45:53Z",
+          "updatedAt": "2024-03-04T16:45:53Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOKiCa6c5yIkC_",
+          "commit": {
+            "abbreviatedOid": "cd130cc"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T17:03:06Z",
+          "updatedAt": "2024-03-04T17:03:06Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 11,
@@ -459,26 +579,71 @@
       "id": "PR_kwDOKiCa6c5ls_Io",
       "title": "Add enrollment hints",
       "url": "https://github.com/lake-wg/authz/pull/13",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "geonnave",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addresses #7. Work in progress.",
       "createdAt": "2024-02-01T13:42:22Z",
-      "updatedAt": "2024-02-09T15:58:16Z",
+      "updatedAt": "2024-03-04T14:22:00Z",
       "baseRepository": "lake-wg/authz",
       "baseRefName": "master",
-      "baseRefOid": "2bf9001c881352d01d91e93393601bc5c126889e",
+      "baseRefOid": "96776f116f44f9801783f6c325ebaeca81530de7",
       "headRepository": "geonnave/lake-authz",
       "headRefName": "add-enrollment-hints",
-      "headRefOid": "ea029f4f0156e12d9d312d4914158452e85b9cb9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "ff0d6c33389b954e20b87bcd2c067f88e9b954fe",
+      "closedAt": "2024-03-04T14:21:55Z",
+      "mergedAt": "2024-03-04T14:21:55Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "74a6c6d2bfa4641200728f05720aaa7a33ff604c"
+      },
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I read through the changes, some minor comments: \r\n\r\n* If could be good to clarify that \u201cOPAQUE_INFO\u201d is opaque when viewed as information element in EDHOC. It is opaque to V but the application in U and W can read the contents.\r\n* \u201cThe hint is an optional field in EAD_1, and it must be encrypted.\u201d\r\nClarify that u_hint is included in OPAQUE_INFO.\r\n* Similarly, clarify that v_hint in included in REJECT_INFO\r\n* Nit: All words in upper case in titles: \"Enrollment hints\"->\"Enrollment Hints\", etc.",
+          "createdAt": "2024-03-04T10:32:04Z",
+          "updatedAt": "2024-03-04T10:32:04Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "One more comment: \r\n\r\n\"W generates error_content and transfers it to V via the secure connection.\"\r\n\r\nWe should explain how this message is part of the VREQ/VRES protocol. This is not necessary an error from the point of view of that protocol. If we don't have a quick fix, make a separate issue.\r\n\r\nEdit: For example, add a flag in VRES\r\n\r\nVoucher_Response = [\r\n    message_1:      bstr,\r\n    flag:               int,\r\n    response:        bstr,\r\n    ? opaque_state: bstr\r\n]\r\n\r\nflag = -1 is used with response = Voucher.  In case of reject, then (flag, response) = error_content.\r\n\r\n(or other preferred construction)\r\n\r\nEdit: Or reserve REJECT_TYPE = 0 for the no reject case. The flag/ REJECT_TYPE thus becomes a status code for the VREQ/VRES protocol. Maybe rename \"REJECT_TYPE\" accordingly. Or leave out for this update. ",
+          "createdAt": "2024-03-04T10:40:19Z",
+          "updatedAt": "2024-03-04T10:58:28Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thank you @chrysn and @gselander for your comments.\r\n\r\nNote that the reviewed text included more commits than just the hints. I just rebased it from master to include just the hints' update.\r\n\r\nFinally, @gselander I just addressed the comments that applied to the hints section. Will address the remaining ones in a separate issue.",
+          "createdAt": "2024-03-04T14:00:10Z",
+          "updatedAt": "2024-03-04T14:00:10Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks @geonnave, ff0d6c3 looks good.",
+          "createdAt": "2024-03-04T14:16:25Z",
+          "updatedAt": "2024-03-04T14:16:25Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOKiCa6c5yEq7v",
+          "commit": {
+            "abbreviatedOid": "ea029f4"
+          },
+          "author": "chrysn",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "The voucher details are something I care about, and that text looks good to me.",
+          "createdAt": "2024-03-04T09:30:07Z",
+          "updatedAt": "2024-03-04T09:30:07Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 14,
@@ -535,6 +700,105 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOKiCa6c5omLzS",
+      "title": "CoJP examples: Don't send extra Content-Format",
+      "url": "https://github.com/lake-wg/authz/pull/16",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Sending these is optional in oscore-edhoc, and given there is a SHALL in the text, this needlessly increases the verbosity over the air.\r\n\r\n(I'm tempted to state something similar about the CON in message 1, especially with regard to RFC9031's text on join proxies, but at least that's more complicated, and removing content-format is easy).",
+      "createdAt": "2024-03-04T14:19:59Z",
+      "updatedAt": "2024-03-04T16:54:50Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "96776f116f44f9801783f6c325ebaeca81530de7",
+      "headRepository": "chrysn-pull-requests/authz",
+      "headRefName": "no-extra-ct",
+      "headRefOid": "8ee5bd78050b99235766e1d4bf310cdf530ace78",
+      "closedAt": "2024-03-04T16:54:50Z",
+      "mergedAt": "2024-03-04T16:54:50Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "f4dc212f99e41b37be7aea286bf16b7381a3958b"
+      },
+      "comments": [
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@malishav I think you have more context on the impact of this change, could you please take a look?",
+          "createdAt": "2024-03-04T14:26:27Z",
+          "updatedAt": "2024-03-04T14:26:27Z"
+        },
+        {
+          "author": "geonnave",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thank you for your contribution @chrysn!",
+          "createdAt": "2024-03-04T16:54:46Z",
+          "updatedAt": "2024-03-04T16:54:46Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOKiCa6c5yHz3o",
+          "commit": {
+            "abbreviatedOid": "8ee5bd7"
+          },
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "I believe @chrysn is right. There is a SHALL in our text on how to transport the message but we include Content-Format there, although it is optionally transported (media-type can be inferred from the URI) according to draft-ietf-core-oscore-edhoc. I think the PR is OK to be merged.",
+          "createdAt": "2024-03-04T15:40:19Z",
+          "updatedAt": "2024-03-04T15:40:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOKiCa6c5omuRC",
+      "title": "Clarifications about the usage of OPAQUE_INFO",
+      "url": "https://github.com/lake-wg/authz/pull/18",
+      "state": "MERGED",
+      "author": "geonnave",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Solves #17 ",
+      "createdAt": "2024-03-04T15:29:30Z",
+      "updatedAt": "2024-03-04T16:23:15Z",
+      "baseRepository": "lake-wg/authz",
+      "baseRefName": "master",
+      "baseRefOid": "74a6c6d2bfa4641200728f05720aaa7a33ff604c",
+      "headRepository": "geonnave/lake-authz",
+      "headRefName": "clarifications-opaque-info",
+      "headRefOid": "d51adec35a6c688bd7fc4df97f5c15384780846d",
+      "closedAt": "2024-03-04T16:23:12Z",
+      "mergedAt": "2024-03-04T16:23:12Z",
+      "mergedBy": "geonnave",
+      "mergeCommit": {
+        "oid": "a5fe68b295b57624dd0c0c272818a9850c32a6ed"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOKiCa6c5yH3lb",
+          "commit": {
+            "abbreviatedOid": "d51adec"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T15:46:35Z",
+          "updatedAt": "2024-03-04T15:46:35Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
